@@ -41,6 +41,7 @@ interface ComplementaryMaterial {
 // --- Constants & Data ---
 const LOGO_URL = "https://i.ibb.co/mFbSYv6j/1000112350.webp";
 const WHATSAPP_LINK = "https://w.app/editoraeditalconcursos";
+const BG_IMAGE_URL = "https://i.ibb.co/cXycwrsG/foto-inss.jpg";
 
 const SUBJECTS: Subject[] = [
   {
@@ -166,17 +167,23 @@ const getDownloadLink = (url: string) => {
 // --- Components ---
 
 const Header = ({ onLogout, showLogout = false }: { onLogout?: () => void, showLogout?: boolean }) => (
-  <header className="fixed top-0 left-0 right-0 h-20 bg-slate-50/90 backdrop-blur-md border-b border-slate-200 shadow-sm z-50 flex items-center justify-between px-6 md:px-12">
+  <header className="fixed top-0 left-0 right-0 h-20 z-50 flex items-center justify-between px-6 md:px-12 overflow-hidden">
+    {/* Background Image with Overlay */}
+    <div className="absolute inset-0 z-[-1]">
+      <img src={BG_IMAGE_URL} alt="" className="w-full h-full object-cover opacity-10" referrerPolicy="no-referrer" />
+      <div className="absolute inset-0 bg-[#020617]/80 backdrop-blur-md border-b border-slate-800"></div>
+    </div>
+    
     <div className="flex items-center gap-4">
       <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-[#0056b3] bg-white flex items-center justify-center shadow-sm">
         <img src={LOGO_URL} alt="Logo Edital Concursos" className="h-full w-full object-cover" referrerPolicy="no-referrer" />
       </div>
-      <span className="text-xl font-bold text-[#0056b3] uppercase tracking-wider hidden sm:block">Edital Concursos</span>
+      <span className="text-xl font-bold text-white uppercase tracking-wider hidden sm:block">Edital Concursos</span>
     </div>
     {showLogout && (
       <button 
         onClick={onLogout}
-        className="flex items-center gap-2 text-gray-600 hover:text-red-500 transition-colors font-medium"
+        className="flex items-center gap-2 text-slate-300 hover:text-red-400 transition-colors font-medium"
       >
         <LogOut size={20} />
         <span className="hidden sm:inline">Sair</span>
@@ -280,30 +287,42 @@ export default function App() {
 
   if (view === 'login') {
     return (
-      <div className="min-h-screen bg-slate-100 flex flex-col">
+      <div className="min-h-screen bg-[#020617] flex flex-col relative overflow-hidden">
+        {/* Subtle Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={BG_IMAGE_URL} 
+            alt="" 
+            className="w-full h-full object-cover opacity-15" 
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/50 via-[#020617]/80 to-[#020617]"></div>
+        </div>
+
         <Header />
-        <main className="flex-1 flex items-center justify-center p-6 mt-20">
+        
+        <main className="flex-1 flex items-center justify-center p-6 mt-20 z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white p-8 md:p-12 rounded-3xl shadow-2xl max-w-md w-full border border-slate-200"
+            className="bg-[#0f172a]/90 backdrop-blur-xl p-8 md:p-12 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] max-w-md w-full border border-slate-800"
           >
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-extrabold text-[#0056b3] mb-2 tracking-tight">Área de Membros</h1>
-              <h2 className="text-xl font-medium text-gray-500">INSS 2026</h2>
+              <h1 className="text-3xl font-extrabold text-white mb-2 tracking-tight drop-shadow-lg">Área de Membros</h1>
+              <h2 className="text-xl font-medium text-[#ff7f50] drop-shadow-sm">INSS 2026</h2>
             </div>
             
-            <p className="text-gray-600 text-center mb-8">
+            <p className="text-slate-300 text-center mb-8">
               Digite seu nome para acessar sua área de estudos.
             </p>
             
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Nome do Aluno</label>
+                <label className="block text-sm font-semibold text-slate-400 mb-2">Nome do Aluno</label>
                 <input 
                   type="text" 
                   placeholder="Ex: Eduarda"
-                  className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:border-[#00a8ff] focus:outline-none transition-all text-lg"
+                  className="w-full px-5 py-4 rounded-xl border-2 border-slate-700 bg-[#1e293b] text-white placeholder-slate-500 focus:border-[#00a8ff] focus:outline-none transition-all text-lg"
                   onKeyDown={(e) => e.key === 'Enter' && handleLogin((e.target as HTMLInputElement).value)}
                   id="login-input"
                 />
@@ -329,21 +348,28 @@ export default function App() {
 
   if (view === 'dashboard') {
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col">
+      <div className="min-h-screen bg-[#020617] flex flex-col">
         <Header onLogout={handleLogout} showLogout />
         
         <main className="flex-1 mt-20 pb-20">
           {/* Welcome Banner */}
-          <section className="bg-gradient-to-r from-[#0056b3] to-[#00a8ff] py-16 px-6 shadow-inner">
-            <div className="max-w-7xl mx-auto text-center">
+          <section className="bg-[#020617] py-24 px-6 shadow-2xl relative overflow-hidden border-b border-slate-800">
+            <div className="absolute inset-0 opacity-20">
+              <img src={BG_IMAGE_URL} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/50 via-[#020617]/80 to-[#020617]"></div>
+            </div>
+            <div className="max-w-7xl mx-auto text-center relative z-10">
               <motion.h1 
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-3xl md:text-5xl font-black text-white uppercase tracking-widest leading-tight"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]"
               >
-                BEM-VINDO, {userName}, À SUA ÁREA DE ESTUDOS.
+                BEM-VINDO, <span className="text-[#ff7f50]">{userName}</span>,<br />
+                À SUA ÁREA DE ESTUDOS.
               </motion.h1>
-              <p className="text-white/80 mt-4 text-lg font-medium">Sua jornada rumo à aprovação no INSS 2026 começa aqui.</p>
+              <p className="text-slate-400 mt-8 text-xl md:text-2xl font-medium max-w-3xl mx-auto drop-shadow-md">
+                Sua jornada rumo à aprovação no INSS 2026 começa aqui.
+              </p>
             </div>
           </section>
 
@@ -351,8 +377,8 @@ export default function App() {
             {/* Subjects Section */}
             <section className="mb-16">
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-2 h-8 bg-[#0056b3] rounded-full"></div>
-                <h2 className="text-2xl font-bold text-gray-800 uppercase tracking-wider">Disciplinas do Curso</h2>
+                <div className="w-2 h-8 bg-[#ff7f50] rounded-full shadow-[0_0_10px_rgba(255,127,80,0.5)]"></div>
+                <h2 className="text-2xl font-bold text-white uppercase tracking-wider">Disciplinas do Curso</h2>
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -364,7 +390,7 @@ export default function App() {
                     transition={{ delay: index * 0.05 }}
                     whileHover={{ y: -5 }}
                     onClick={() => openSubject(subject)}
-                    className="group relative h-48 rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all"
+                    className="group relative h-48 rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-[0_0_20px_rgba(0,168,255,0.3)] transition-all border border-slate-800"
                   >
                     <img 
                       src={subject.bgImage} 
@@ -372,9 +398,9 @@ export default function App() {
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent"></div>
                     <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                      <h3 className="text-white font-bold text-lg leading-tight group-hover:text-[#00a8ff] transition-colors">{subject.title}</h3>
+                      <h3 className="text-white font-bold text-lg leading-tight group-hover:text-[#ff7f50] transition-colors">{subject.title}</h3>
                       <div className="flex items-center gap-2 mt-2 text-white/60 text-xs font-bold uppercase tracking-widest">
                         <span>Acessar Conteúdo</span>
                         <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
@@ -389,7 +415,7 @@ export default function App() {
             <section>
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-2 h-8 bg-[#ff7f50] rounded-full"></div>
-                <h2 className="text-2xl font-bold text-gray-800 uppercase tracking-wider">Materiais Complementares</h2>
+                <h2 className="text-2xl font-bold text-white uppercase tracking-wider">Materiais Complementares</h2>
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -401,7 +427,7 @@ export default function App() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 + index * 0.05 }}
-                      className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col"
+                      className="bg-[#0f172a] rounded-3xl overflow-hidden shadow-xl border border-slate-800 flex flex-col"
                     >
                       <div className="h-40 relative">
                         <img 
@@ -410,7 +436,7 @@ export default function App() {
                           className="w-full h-full object-cover"
                           referrerPolicy="no-referrer"
                         />
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                           {isUnlocked ? (
                             <Unlock size={48} className="text-white opacity-80" />
                           ) : (
@@ -420,7 +446,7 @@ export default function App() {
                       </div>
                       
                       <div className="p-6 flex-1 flex flex-col">
-                        <h3 className="text-xl font-bold text-gray-800 mb-4 h-14 line-clamp-2">{material.title}</h3>
+                        <h3 className="text-xl font-bold text-white mb-4 h-14 line-clamp-2">{material.title}</h3>
                         
                         {isUnlocked ? (
                           <button 
@@ -432,13 +458,13 @@ export default function App() {
                           </button>
                         ) : (
                           <div className="space-y-4 mt-auto">
-                            <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200">
-                              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Código de Acesso</p>
+                            <div className="bg-[#1e293b] p-4 rounded-2xl border border-slate-700">
+                              <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Código de Acesso</p>
                               <div className="flex gap-2">
                                 <input 
                                   type="text" 
                                   placeholder="Digite o código"
-                                  className="flex-1 bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00a8ff]"
+                                  className="flex-1 bg-[#0f172a] border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#ff7f50]"
                                   id={`code-${material.id}`}
                                 />
                                 <button 
@@ -461,7 +487,7 @@ export default function App() {
                                   const success = handleUnlock(material.id, input.value, material.code);
                                   if (!success) alert('Código incorreto. Tente novamente.');
                                 }}
-                                className="w-full flex items-center justify-center gap-2 text-[#0056b3] font-bold py-2 border-2 border-[#0056b3] rounded-xl hover:bg-[#0056b3] hover:text-white transition-all"
+                                className="w-full flex items-center justify-center gap-2 text-[#ff7f50] font-bold py-2 border-2 border-[#ff7f50] rounded-xl hover:bg-[#ff7f50] hover:text-white transition-all"
                               >
                                 <ShieldCheck size={18} />
                                 Desbloquear Agora
@@ -498,23 +524,28 @@ export default function App() {
     const material = selectedSubject as ComplementaryMaterial;
 
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col">
+      <div className="min-h-screen bg-[#020617] flex flex-col">
         <Header onLogout={handleLogout} showLogout />
         
         <main className="flex-1 mt-20 pb-20">
           {/* Subject Header */}
-          <div className="bg-[#f1f5f9] border-b border-gray-200 py-8 px-6">
-            <div className="max-w-5xl mx-auto">
+          <div className="bg-[#0f172a] border-b border-slate-800 py-12 px-6 relative overflow-hidden">
+            {/* Background Texture */}
+            <div className="absolute inset-0 opacity-5">
+              <img src={BG_IMAGE_URL} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+            </div>
+            
+            <div className="max-w-5xl mx-auto relative z-10">
               <button 
                 onClick={() => setView('dashboard')}
-                className="flex items-center gap-2 text-gray-500 hover:text-[#0056b3] transition-colors mb-6 font-bold uppercase text-xs tracking-widest"
+                className="flex items-center gap-2 text-slate-400 hover:text-[#ff7f50] transition-colors mb-6 font-bold uppercase text-xs tracking-widest"
               >
                 <ArrowLeft size={16} />
                 Voltar para o Início
               </button>
               
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <h1 className="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tight">
+                <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter drop-shadow-2xl">
                   {selectedSubject.title}
                 </h1>
                 
@@ -522,21 +553,21 @@ export default function App() {
                   <div className="flex flex-wrap gap-2">
                     <button 
                       onClick={() => { setActiveModule('teoria'); setShowContent(false); }}
-                      className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${activeModule === 'teoria' ? 'bg-[#0056b3] text-white shadow-lg' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+                      className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${activeModule === 'teoria' ? 'bg-[#0056b3] text-white shadow-lg' : 'bg-[#1e293b] text-slate-300 hover:bg-[#334155]'}`}
                     >
                       <BookOpen size={18} />
                       Teoria
                     </button>
                     <button 
                       onClick={() => { setActiveModule('mapas'); setShowContent(false); }}
-                      className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${activeModule === 'mapas' ? 'bg-[#0056b3] text-white shadow-lg' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+                      className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${activeModule === 'mapas' ? 'bg-[#0056b3] text-white shadow-lg' : 'bg-[#1e293b] text-slate-300 hover:bg-[#334155]'}`}
                     >
                       <Map size={18} />
                       Mapas Mentais
                     </button>
                     <button 
                       onClick={() => { setActiveModule('questoes'); setShowContent(false); }}
-                      className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${activeModule === 'questoes' ? 'bg-[#0056b3] text-white shadow-lg' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+                      className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${activeModule === 'questoes' ? 'bg-[#0056b3] text-white shadow-lg' : 'bg-[#1e293b] text-slate-300 hover:bg-[#334155]'}`}
                     >
                       <HelpCircle size={18} />
                       Questões
@@ -549,16 +580,16 @@ export default function App() {
 
           {/* Module Content */}
           <div className="max-w-5xl mx-auto px-6 py-12">
-            <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
-              <div className="p-8 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+            <div className="bg-[#0f172a] rounded-3xl shadow-2xl border border-slate-800 overflow-hidden">
+              <div className="p-8 border-b border-slate-800 bg-[#1e293b]/50 flex items-center justify-between">
                 <div>
-                  <h3 className="text-xl font-bold text-gray-800 uppercase tracking-wide">
+                  <h3 className="text-xl font-bold text-white uppercase tracking-wide">
                     {activeModule === 'teoria' ? 'Conteúdo Teórico' : 
                      activeModule === 'mapas' ? 'Mapas Mentais' : 
                      activeModule === 'questoes' ? 'Questões Gabaritadas' : 
                      'Material Complementar'}
                   </h3>
-                  <p className="text-gray-500 text-sm mt-1">Acesse o material completo abaixo.</p>
+                  <p className="text-slate-400 text-sm mt-1">Acesse o material completo abaixo.</p>
                 </div>
                 <div className="flex gap-3">
                   <button 
@@ -572,7 +603,7 @@ export default function App() {
                     href={getDownloadLink(isSubject ? (activeModule === 'teoria' ? subject.teoria : activeModule === 'mapas' ? subject.mapas : subject.questoes) : material.link)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-bold hover:bg-gray-300 transition-all"
+                    className="flex items-center gap-2 bg-slate-700 text-slate-200 px-6 py-3 rounded-xl font-bold hover:bg-slate-600 transition-all"
                   >
                     <Download size={20} />
                     Baixar PDF
@@ -580,7 +611,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="p-4 md:p-8 min-h-[400px] flex items-center justify-center bg-gray-50">
+              <div className="p-4 md:p-8 min-h-[400px] flex items-center justify-center bg-[#020617]">
                 <AnimatePresence mode="wait">
                   {showContent ? (
                     <motion.div 
@@ -604,14 +635,14 @@ export default function App() {
                       exit={{ opacity: 0, scale: 0.9 }}
                       className="text-center max-w-sm"
                     >
-                      <div className="w-20 h-20 bg-[#0056b3]/10 text-[#0056b3] rounded-full flex items-center justify-center mx-auto mb-6">
+                      <div className="w-20 h-20 bg-[#ff7f50]/20 text-[#ff7f50] rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_20px_rgba(255,127,80,0.2)]">
                         <Eye size={40} />
                       </div>
-                      <h4 className="text-xl font-bold text-gray-800 mb-2">Pronto para estudar?</h4>
-                      <p className="text-gray-500 mb-8">Clique no botão "Visualizar" acima para carregar o material interativo.</p>
+                      <h4 className="text-xl font-bold text-white mb-2">Pronto para estudar?</h4>
+                      <p className="text-slate-400 mb-8">Clique no botão "Visualizar" acima para carregar o material interativo.</p>
                       <button 
                         onClick={() => setShowContent(true)}
-                        className="text-[#0056b3] font-bold underline underline-offset-4 hover:text-[#00a8ff] transition-colors"
+                        className="text-[#ff7f50] font-bold underline underline-offset-4 hover:text-white transition-colors"
                       >
                         Carregar visualizador agora
                       </button>
@@ -622,13 +653,13 @@ export default function App() {
             </div>
 
             {/* Support Box */}
-            <div className="mt-12 bg-[#fff4e5] p-8 rounded-3xl border border-[#ffe0b2] flex flex-col md:flex-row items-center gap-8">
+            <div className="mt-12 bg-[#1e293b] p-8 rounded-3xl border border-slate-700 flex flex-col md:flex-row items-center gap-8">
               <div className="w-16 h-16 bg-[#ff7f50] text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg">
                 <AlertCircle size={32} />
               </div>
               <div className="flex-1 text-center md:text-left">
-                <h4 className="text-xl font-bold text-[#e65100] mb-1 uppercase tracking-tight">Dúvidas sobre o conteúdo?</h4>
-                <p className="text-[#bf360c]">Nossa equipe pedagógica está pronta para te ajudar via WhatsApp.</p>
+                <h4 className="text-xl font-bold text-white mb-1 uppercase tracking-tight">Dúvidas sobre o conteúdo?</h4>
+                <p className="text-slate-300">Nossa equipe pedagógica está pronta para te ajudar via WhatsApp.</p>
               </div>
               <a 
                 href={WHATSAPP_LINK}
